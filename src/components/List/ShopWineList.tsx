@@ -11,7 +11,13 @@ export const ShopWineList = () => {
     const fetchWines = async () => {
       try {
         const response = await fetch(
-          "https://back-vonoselecto-bedagphgf7cgeqf3.uksouth-01.azurewebsites.net/api/shop/wine/"
+          "https://back-vonoselecto-bedagphgf7cgeqf3.uksouth-01.azurewebsites.net/api/shop/wine/",
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+            },
+          }
         );
         if (!response.ok) throw new Error("Failed to fetch wines");
         const data = await response.json();

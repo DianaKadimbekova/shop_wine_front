@@ -17,7 +17,13 @@ export const ShopWineModal = ({ id }: ShopWineModalProps) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://back-vonoselecto-bedagphgf7cgeqf3.uksouth-01.azurewebsites.net/api/shop/wine/${id}/`
+          `https://back-vonoselecto-bedagphgf7cgeqf3.uksouth-01.azurewebsites.net/api/shop/wine/${id}/`,
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+            },
+          }
         );
         if (!response.ok) {
           console.log("Failed to fetch wine data");
