@@ -1,5 +1,4 @@
 # Getting Started
-## Demo [https://github.com/DianaKadimbekova/shop_wine_front.git]
 1. Clone the repo
 ```
 git clone https://github.com/DianaKadimbekova/shop_wine_front.git
