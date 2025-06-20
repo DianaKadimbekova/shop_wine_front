@@ -1,9 +1,9 @@
 {
-  "name": "shop_wine_front",
+  "base": "/shop_wine_front/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage":"https://github.com/DianaKadimbekova/shop_wine_front.git",
+  "homepage":"https://DianaKadimbekova.github.io/shop_wine_front/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
