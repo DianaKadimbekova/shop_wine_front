@@ -1,21 +1,17 @@
 import styles from "./registration.module.scss";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { FacebookProvider } from "@kazion/react-facebook-login";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { User } from "./UserType";
 
 export const Registration = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
 
   const handleRegistration = async (event: React.FormEvent) => {
     event.preventDefault();
-    setIsLoading(true);
     setError(null);
 
     try {
@@ -30,8 +26,7 @@ export const Registration = () => {
         }
       );
       if (!request.ok) throw new Error("Error");
-      const data = await request.json();
-      setUser(data.user);
+      await request.json();
     } catch {
       setError("Catch error");
       console.log("Catch error");
