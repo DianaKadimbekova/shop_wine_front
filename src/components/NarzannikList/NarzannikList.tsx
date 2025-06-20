@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { ShopWineModal } from "../Modal/ShopWineModal";
-import type { ShopWineModalType } from "../Modal/ShopWineModalType";
-import { ShopWineLoader } from "../Loader/ShopWineLoader";
-import styles from "./ShopWineList.module.scss";
+import { NarzannikModal } from "../Narzannik/NarzannikModal";
+import type { NarzannikModalType } from "./NarzarnnikListType";
 
-export const ShopWineList = () => {
-  const [wines, setWines] = useState<ShopWineModalType[]>([]);
+export const NarzannikList = () => {
+  const [narzs, setNarzs] = useState<NarzannikModalType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>();
 
@@ -23,7 +21,7 @@ export const ShopWineList = () => {
         );
         if (!response.ok) throw new Error("Failed to fetch wines");
         const data = await response.json();
-        setWines(data.results);
+        setNarzs(data.results);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Unknown error");
       } finally {
@@ -33,18 +31,16 @@ export const ShopWineList = () => {
     fetchWines();
   }, []);
 
-  if (loading) return <ShopWineLoader />;
+  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (!wines.length) return <div>No wines found</div>;
+  if (!narzs.length) return <div>No wines found</div>;
 
   return (
     <>
-      <div className={styles.lists}>
-        <div>
-          {wines.map((wine) => (
-            <ShopWineModal key={wine.id} id={wine.id} />
-          ))}
-        </div>
+      <div>
+        {narzs.map((narz) => (
+          <NarzannikModal key={narz.id} id={narz.id} />
+        ))}
       </div>
     </>
   );

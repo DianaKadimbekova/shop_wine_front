@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { ShopWineModal } from "../Modal/ShopWineModal";
-import type { ShopWineModalType } from "../Modal/ShopWineModalType";
+import { GlassesModal } from "../GlassModal/GlassModal";
+import type { GlassesListType } from "./GlassesListType";
 import { ShopWineLoader } from "../Loader/ShopWineLoader";
-import styles from "./ShopWineList.module.scss";
 
-export const ShopWineList = () => {
-  const [wines, setWines] = useState<ShopWineModalType[]>([]);
+export const GlassesList = () => {
+  const [glasses, setGlasses] = useState<GlassesListType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>();
 
@@ -13,7 +12,7 @@ export const ShopWineList = () => {
     const fetchWines = async () => {
       try {
         const response = await fetch(
-          "https://back-vonoselecto-bedagphgf7cgeqf3.uksouth-01.azurewebsites.net/api/shop/wine/",
+          "https://back-vonoselecto-bedagphgf7cgeqf3.uksouth-01.azurewebsites.net/api/shop/glass/",
           {
             method: "GET",
             headers: {
@@ -23,7 +22,7 @@ export const ShopWineList = () => {
         );
         if (!response.ok) throw new Error("Failed to fetch wines");
         const data = await response.json();
-        setWines(data.results);
+        setGlasses(data.results);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Unknown error");
       } finally {
@@ -35,16 +34,14 @@ export const ShopWineList = () => {
 
   if (loading) return <ShopWineLoader />;
   if (error) return <div>Error: {error}</div>;
-  if (!wines.length) return <div>No wines found</div>;
+  if (!glasses.length) return <div>No wines found</div>;
 
   return (
     <>
-      <div className={styles.lists}>
-        <div>
-          {wines.map((wine) => (
-            <ShopWineModal key={wine.id} id={wine.id} />
-          ))}
-        </div>
+      <div>
+        {glasses.map((glass) => (
+          <GlassesModal key={glass.id} id={glass.id} />
+        ))}
       </div>
     </>
   );

@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import styles from "./ShopWineModal.module.scss";
+import styles from "./Narzannik.module.scss";
 import { ShopWineLoader } from "../Loader/ShopWineLoader";
-import type { ShopWineModalType } from "./ShopWineModalType";
+import type { NarzannikModalType } from "./NarzannikModalType";
 
-interface ShopWineModalProps {
+interface NarzannikModalProps {
   id: number;
 }
 
-export const ShopWineModal = ({ id }: ShopWineModalProps) => {
-  const [wineData, setWineData] = useState<ShopWineModalType | null>(null);
+export const NarzannikModal = ({ id }: NarzannikModalProps) => {
+  const [narzannikData, setNarzannikData] = useState<NarzannikModalType | null>(
+    null
+  );
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>();
   const [quantity, setQuantity] = useState<number>(1);
@@ -17,7 +19,7 @@ export const ShopWineModal = ({ id }: ShopWineModalProps) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://back-vonoselecto-bedagphgf7cgeqf3.uksouth-01.azurewebsites.net/api/shop/wine/${id}/`,
+          `https://back-vonoselecto-bedagphgf7cgeqf3.uksouth-01.azurewebsites.net/api/shop/corkscrew/1/`,
           {
             method: "GET",
             headers: {
@@ -30,16 +32,16 @@ export const ShopWineModal = ({ id }: ShopWineModalProps) => {
           console.log("Failed to fetch wine data");
           throw new Error("Failed to fetch wine data");
         }
-        const data: ShopWineModalType = await response.json();
+        const data: NarzannikModalType = await response.json();
 
         const productResponse = await fetch(
-          `https://back-vonoselecto-bedagphgf7cgeqf3.uksouth-01.azurewebsites.net/api/shop/products/${id}/`
+          `https://back-vonoselecto-bedagphgf7cgeqf3.uksouth-01.azurewebsites.net/api/shop/products/3/`
         );
         if (!productResponse.ok)
           throw new Error("Failed to fetch product data");
         const productData = await productResponse.json();
 
-        setWineData({ ...data, product: productData });
+        setNarzannikData({ ...data, product: productData });
       } catch (err) {
         setError(err instanceof Error ? err.message : "Unknown error");
       } finally {
@@ -54,7 +56,7 @@ export const ShopWineModal = ({ id }: ShopWineModalProps) => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (!wineData) return <div>No wine data found</div>;
+  if (!narzannikData) return <div>No wine data found</div>;
 
   return (
     <>
@@ -63,20 +65,20 @@ export const ShopWineModal = ({ id }: ShopWineModalProps) => {
       ) : (
         <div className={styles.modal}>
           <img
-            src={wineData.product.image}
-            alt="image wine"
+            src={narzannikData.product.imageUrl}
+            alt="image narzannik"
             className={styles.modal__image}
           />
           <div className={`${styles.modal__title}`}>
-            {wineData?.product.name_of_product} {wineData?.vintage_year}
+            {narzannikData?.product.productName}
           </div>
           <p className={`${styles.modal__description}`}>
-            {wineData?.product.description}
+            {narzannikData?.product.description}
           </p>
           <dl className={`${styles.modal__capacity}`}>
-            <dt className={styles["modal__capacity--title"]}>Capacity:</dt>
+            <dt className={styles["modal__capacity--title"]}>Matterial:</dt>
             <dd className={styles["modal__capacity--ml"]}>
-              {wineData.product.stock_quantity} ml
+              {narzannikData.material}
             </dd>
           </dl>
           <div className={styles[`modal__product-actions`]}>
@@ -110,7 +112,7 @@ export const ShopWineModal = ({ id }: ShopWineModalProps) => {
             </svg>
           </div>
           <div className={styles.modal__price}>
-            {wineData?.product.price}UAN
+            {narzannikData?.product.price}UAN
           </div>
           <button className={styles["modal__add-to-cart"]}>Add to cart</button>
         </div>
