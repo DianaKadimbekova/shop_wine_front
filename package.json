@@ -1,5 +1,5 @@
 {
-  "base": "/shop_wine_front/",
+  "name": "shop_wine_front",
   "private": true,
   "version": "0.0.0",
   "type": "module",
